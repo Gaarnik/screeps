@@ -4,9 +4,10 @@ const Jobs = require("./Jobs");
 const Spawn = require("./Spawn");
 const Towers = require("./Towers");
 const Utils = require("./Utils");
+const Config = require("./Config");
 
-Memory.mainSpawn = "BSA";
-Memory.mainRoom = "E62S12";
+Memory.mainSpawn = Config.mainSpawn;
+Memory.mainRoom = Config.mainRoom;
 Memory.allJob = null;
 
 Spawn.init();
