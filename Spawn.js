@@ -1,9 +1,6 @@
 /// <reference path="typings/index.d.ts" />
 
-const MAX_HARVESTERS    = 2;
-const MAX_UPGRADERS     = 2;
-const MAX_REPAIRERS     = 1;
-const MAX_BUILDERS      = 1;
+const Config = require("./Config");
 
 module.exports = {
 
@@ -29,10 +26,10 @@ module.exports = {
     onTick: function() {
         let energy = Game.spawns[Memory.mainSpawn].room.energyCapacityAvailable;
 
-        module.exports.spawnWorker(energy, "harvester", MAX_HARVESTERS);
-        module.exports.spawnWorker(energy, "upgrader", MAX_UPGRADERS);
-        module.exports.spawnWorker(energy, "repairer", MAX_REPAIRERS);
-        module.exports.spawnWorker(energy, "builder", MAX_BUILDERS);
+        module.exports.spawnWorker(energy, "harvester", Config.spawner.MAX_HARVESTERS);
+        module.exports.spawnWorker(energy, "upgrader", Config.spawner.MAX_UPGRADERS);
+        module.exports.spawnWorker(energy, "repairer", Config.spawner.MAX_REPAIRERS);
+        module.exports.spawnWorker(energy, "builder", Config.spawner.MAX_BUILDERS);
     },
 
     spawnWorker: function(energy, job, max) {
