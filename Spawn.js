@@ -25,6 +25,12 @@ module.exports = {
             return this.createCreep(body, undefined, { job: job, full: false });
         };
         
+        StructureSpawn.prototype.createRecolterCreep = function(startFlag, targetFlag) {
+            return this.createCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], undefined, {
+                job: "recolter", full: false, inTargetRoom: false, startFlag: startFlag, targetFlag: targetFlag
+            });
+        };
+
         StructureSpawn.prototype.createClaimerCreep = function(flag) {
             return this.createCreep([CLAIM, CLAIM, MOVE], undefined, {
                 job: "claimer", full: false, flag: flag, inRoom: false
@@ -45,6 +51,11 @@ module.exports = {
             if(error == ERR_NOT_ENOUGH_ENERGY && harvestersCount == 0)
                 Game.spawns[Memory.mainSpawn].createCustomCreep(Game.spawns[Memory.mainSpawn].room.energyAvailable, "harvester");
         }
+
+        // Spawn recolters
+        let recoltersCount = _.sum(Game.creeps, (c) => c.memory.job == "recolter");
+        if(recoltersCount < Config.spawner.MAX_RECOLTERS)
+            Game.spawns[Memory.mainSpawn].createRecolterCreep(Config.baseFlag, Config.farmFlag);
 
         // Spawn other jobs
         module.exports.spawnWorker(energy, "upgrader", Config.spawner.MAX_UPGRADERS);

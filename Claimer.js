@@ -13,8 +13,7 @@ module.exports = {
             
             if(creep.moveTo(flag) != 0)
                 return creep.suicide();
-console.log(creep.room.name);
-console.log(flag.room.name);
+
             if(creep.room.name == flag.room.name)
                 creep.memory.inRoom = true;
         }

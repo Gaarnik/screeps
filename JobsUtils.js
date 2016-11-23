@@ -3,8 +3,8 @@
 module.exports = {
 
     getEnergy: function(creep) {
-        // Harvesters can only get energy from sources
-        if(creep.memory.job == "harvester") {
+        // Harvesters & Recolters can only get energy from sources
+        if(creep.memory.job == "harvester" || creep.memory.job == "recolter") {
             // Try to find an energy source
             let source = creep.pos.findClosestByPath(FIND_SOURCES, {
                 filter: (s) => s.energy > 0
@@ -40,6 +40,12 @@ module.exports = {
         
         if(creep.carry.energy >= creep.carryCapacity)
             creep.memory.full = true;
+    },
+    
+    createRecolter: function(startFlag, targetFlag) {
+        let name = Game.spawns[Memory.mainSpawn].createRecolterCreep(startFlag, targetFlag);
+        if(name < 0)
+            return console.log("Cannot create Recolter: " + name);
     },
     
     createClaimer: function(flag) {
