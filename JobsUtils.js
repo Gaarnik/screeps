@@ -3,13 +3,41 @@
 module.exports = {
 
     getEnergy: function(creep) {
-        // Try to find an energy source
-        let source = creep.pos.findClosestByPath(FIND_SOURCES, {
-            filter: (s) => s.energy > 0
-        });
-        if(creep.harvest(source) == ERR_NOT_IN_RANGE)
-            creep.moveTo(source);
+        // Harvesters can only get energy from sources
+        if(creep.memory.job == "harvester") {
+            // Try to find an energy source
+            let source = creep.pos.findClosestByPath(FIND_SOURCES, {
+                filter: (s) => s.energy > 0
+            });
 
+            if(creep.harvest(source) == ERR_NOT_IN_RANGE)
+                creep.moveTo(source);
+        }
+        // Others jobs try to get energy from containers or storages first
+        // otherwise they can get energy from sources
+        else {
+            // Try to find a storage or a container
+            let source = creep.pos.findClosestByPath(FIND_MY_STRUCTURES, {
+                filter: (s) => (s.structureType == STRUCTURE_CONTAINER
+                                || s.structureType == STRUCTURE_STORAGE)
+                                && s.store.energy > 0
+            });
+
+            if(source != undefined) {
+                if(source.transfer(creep, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                    creep.moveTo(source);
+            }
+            // Try to find an energy source
+            else {
+                let source = creep.pos.findClosestByPath(FIND_SOURCES, {
+                    filter: (s) => s.energy > 0
+                });
+
+                if(creep.harvest(source) == ERR_NOT_IN_RANGE)
+                    creep.moveTo(source);
+            }
+        }
+        
         if(creep.carry.energy >= creep.carryCapacity)
             creep.memory.full = true;
     },
