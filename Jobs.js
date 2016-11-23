@@ -4,6 +4,7 @@ const Harvester = require("./Harvester");
 const Upgrader = require("./Upgrader");
 const Builder = require("./Builder");
 const Repairer = require("./Repairer");
+const Claimer = require("./Claimer");
 
 module.exports = {
 
@@ -20,6 +21,8 @@ module.exports = {
                 Builder.onTick(creep);
             else if(job == "repairer")
                 Repairer.onTick(creep);
+            else if(job == "claimer")
+                Claimer.onTick(creep);
         }
     }
 
