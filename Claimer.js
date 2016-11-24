@@ -11,12 +11,13 @@ module.exports = {
             if(flag == undefined)
                 return creep.suicide();
             
-            creep.moveTo(flag);
+            if(creep.moveTo(flag) != 0)
+                return creep.suicide();
 
-            if(flag.room != undefined && creep.room.name == flag.room.name)
+            if(creep.room.name == flag.room.name)
                 creep.memory.inRoom = true;
         }
-        // Reserve the controller
+        // Collect energy & reserve the controller
         else {
             if(creep.room.controller == undefined)
                 return creep.suicide();

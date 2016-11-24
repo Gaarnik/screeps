@@ -10,7 +10,7 @@ module.exports = {
                 return null;
             
             let bodyPartsCount = Math.floor(energy / 200);
-            let maxParts = Math.floor(Config.spawner.MAX_PARTS_BY_CREEP / 3);
+            let maxParts = Config.spawner.MAX_PARTS_BY_CREEP;
             if(maxParts != 0 && bodyPartsCount > maxParts) bodyPartsCount = maxParts;
 
             let body = [];
@@ -26,7 +26,7 @@ module.exports = {
         };
         
         StructureSpawn.prototype.createRecolterCreep = function(startFlag, targetFlag) {
-            return this.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE], undefined, {
+            return this.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {
                 job: "recolter", full: false, inTargetRoom: false, startFlag: startFlag, targetFlag: targetFlag
             });
         };
