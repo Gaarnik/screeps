@@ -17,8 +17,8 @@ module.exports = {
         if(linkFrom == null)
             return;
 
-        // If not full don't transfer energy
-        if(linkFrom.energy < linkFrom.energyCapacity)
+        // If not ready or no energy, don't try to transfer energy
+        if(linkFrom.cooldown > 0 || linkFrom.energy == 0)
             return;
         
         // Get destination link

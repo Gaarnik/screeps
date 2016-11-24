@@ -4,7 +4,7 @@ module.exports = {
     mainSpawn: "BSA",
     mainRoom: "W2N2",
     spawner: {
-        MAX_PARTS_BY_CREEP: 0, // 0 = as big as possible
+        MAX_PARTS_BY_CREEP: 15, // 0 = as big as possible
         
         // 0 = no spawn
         MAX_HARVESTERS: 3,

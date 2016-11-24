@@ -16,6 +16,11 @@ typings install
 
 You are ready to code your colony !
 
+# TODO
+
+- [ ] Suicide creeps when tickToLive < 100 & inventory is empty
+- [ ] Improve spawning algo (with body pattern)
+
 # My public server
 
 Not online yet ...
