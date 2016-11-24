@@ -26,7 +26,7 @@ module.exports = {
         };
         
         StructureSpawn.prototype.createRecolterCreep = function(startFlag, targetFlag) {
-            return this.createCreep([WORK, WORK, CARRY, CARRY, MOVE, MOVE], undefined, {
+            return this.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE, MOVE], undefined, {
                 job: "recolter", full: false, inTargetRoom: false, startFlag: startFlag, targetFlag: targetFlag
             });
         };

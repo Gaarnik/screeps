@@ -1,10 +1,43 @@
 /// <reference path="typings/index.d.ts" />
 
+const Config = require("./Config");
+
 module.exports = {
 
     getEnergy: function(creep) {
-        // Harvesters & Recolters can only get energy from sources
-        if(creep.memory.job == "harvester" || creep.memory.job == "recolter") {
+        // Harvesters can only get energy from links & sources
+        if(creep.memory.job == "harvester") {
+            let source = null;
+
+            // Try to find a link
+            if(Config.linker.enable) {
+                let room = Game.spawns[Memory.mainSpawn].room;
+                let structures = room.lookForAt("structure", Config.linker.to.x, Config.linker.to.y);
+                if(structures.length > 0 && structures[0].structureType == STRUCTURE_LINK && structures[0].energy > 0)
+                    source = structures[0];
+            }
+
+            // Try to find an energy source
+            if(source == null) {
+                source = creep.pos.findClosestByPath(FIND_SOURCES, {
+                    filter: (s) => s.energy > 0
+                });
+            }
+            
+            // Get ebergy fron source
+            if(source != null) {
+                if(source.structureType == STRUCTURE_LINK) {
+                    if(creep.withdraw(source, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE)
+                        creep.moveTo(source);
+                }
+                else {
+                    if(creep.harvest(source) == ERR_NOT_IN_RANGE)
+                        creep.moveTo(source);
+                }
+            }
+        }
+        // Recolters can only get energy from sources
+        else if(creep.memory.job == "recolter") {
             // Try to find an energy source
             let source = creep.pos.findClosestByPath(FIND_SOURCES, {
                 filter: (s) => s.energy > 0
@@ -79,6 +112,13 @@ module.exports = {
         }
 
         console.log(total + " workers in total");
+    },
+
+    sayJob: function() {
+        for(let name in Game.creeps) {
+            let creep = Game.creeps[name];
+            creep.say(creep.memory.job);
+        }
     }
 
 };

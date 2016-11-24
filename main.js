@@ -2,6 +2,7 @@
 
 const Jobs = require("./Jobs");
 const Spawn = require("./Spawn");
+const Linker = require("./Linker");
 const Towers = require("./Towers");
 const Utils = require("./Utils");
 const Config = require("./Config");
@@ -21,6 +22,9 @@ module.exports.loop = function() {
 
     // Create more workers if needed
     Spawn.onTick();
+
+    // Transfer energy between links if needed
+    Linker.onTick();
 
     // Process Towers attack
     Towers.onTick();
